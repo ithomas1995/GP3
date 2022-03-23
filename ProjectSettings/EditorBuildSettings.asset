@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/HubWorld.unity
-    guid: 22a56d58c378dcd45b33ab98f36cfe69
-  - enabled: 1
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/Hub.unity
     guid: d9326f00f8ccbb94ab50d671aaaecbdc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlatformerDream.unity
     guid: 6125eea2b8fadde4086e8cdaa4b8bea5
   - enabled: 1

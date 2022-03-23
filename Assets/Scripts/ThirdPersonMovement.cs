@@ -69,7 +69,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (Input.GetButtonDown("Fire2") && (sceneName != "HubWorld") )
         {
-            SceneManager.LoadScene("Hub");
+            SceneManager.LoadScene("CombatDream");
             Debug.Log("HubReturn");
         }
 
