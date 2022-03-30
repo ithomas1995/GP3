@@ -11,11 +11,15 @@ public class PlayerCombat : MonoBehaviour
     public PlayerGrow script;
     public GameObject BigGuy;
 
+    public int health;
+    public int currentHealth;
+
 
 
     void Start()
     {
         script.isBig = false;
+        currentHealth = health;
     }
     // Update is called once per frame
     void Update()
@@ -33,10 +37,12 @@ public class PlayerCombat : MonoBehaviour
         if(script.isBig == true)
         {
             attackDamage = 10000;
+            currentHealth = 55000;
         }
         else
         {
         attackDamage = 20;
+        currentHealth = 100;
         }
     }
 
@@ -68,6 +74,11 @@ public class PlayerCombat : MonoBehaviour
             Debug.Log("taking damage");
             
         }
+    }
+
+    public void PlayerDamage(int damage)
+    {
+        currentHealth -= damage;
     }
 
     void OnDrawGizmosSelected()
