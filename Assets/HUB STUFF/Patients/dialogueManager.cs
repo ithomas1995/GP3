@@ -11,6 +11,11 @@ public class dialogueManager : MonoBehaviour
     private Queue<string> sentences;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
+    public GameObject BlueprintChatUI;
+    public Animator animator;
+    public bool convoTalking;
+    
+    
     public GameObject ThirdpersonCam;
     public bool CelConvoEnded;
     
@@ -20,20 +25,34 @@ public class dialogueManager : MonoBehaviour
     {
         sentences = new Queue<string>(); 
         CelConvoEnded = false;
+        Application.targetFrameRate = 60;
+        convoTalking = false;
+    }
+
+    void Update ()
+    {
+        if(Input.GetButtonDown("Jump"))
+        {
+            DisplayNextSentence();
+        }
     }
 
 
     public void StartDialogue (Dialogue dialogue)
     {
 
-        if(CelConvoEnded == false)
-        {
+        // if(CelConvoEnded == false)
+        convoTalking = true;
+        animator.SetBool("IsOpen", true);
         nameText.text = dialogue.name;
+        blueprinttextTrigger bt = FindObjectOfType <blueprinttextTrigger>();
+        bt.Nowtalking();
+        Debug.Log("convoTrigger");
 
-        Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+        // Cursor.lockState = CursorLockMode.None;
 
-            ThirdpersonCam.GetComponent<CinemachineFreeLook>().enabled = false;
+        // ThirdpersonCam.GetComponent<CinemachineCameraOffset>().mx = 1;
         
 
         sentences.Clear();
@@ -45,7 +64,8 @@ public class dialogueManager : MonoBehaviour
         }
 
         DisplayNextSentence();
-        }
+        
+        
     }
 
     public void DisplayNextSentence ()
@@ -55,19 +75,36 @@ public class dialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
-
+        blueprinttextTrigger bt = FindObjectOfType <blueprinttextTrigger>();
+        bt.Nowtalking();
         string sentence = sentences.Dequeue();
-        Debug.Log(sentence);
-        dialogueText.text = sentence;
-    }
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentence));
+        convoTalking = true;
+        // Debug.Log(sentence);
+        // dialogueText.text = sentence;
 
+    }
+    
+
+    public IEnumerator TypeSentence(string sentence)
+    {
+        dialogueText.text="";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return null;
+        }
+    }
     void EndDialogue()
     {
-        
+        animator.SetBool("IsOpen", false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         CelConvoEnded = true;
-        ThirdpersonCam.GetComponent<CinemachineFreeLook>().enabled = true;
+        // ThirdpersonCam.GetComponent<CinemachineFreeLook>().enabled = true;
+        convoTalking = false;
+        //BlueprintChatUI.SetActive(false);
     }
     
 }

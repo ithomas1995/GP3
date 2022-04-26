@@ -9,7 +9,25 @@ public class opentrigger : MonoBehaviour
     public Transform player;
     AudioSource m_MyAudioSource;
     bool curtainOpened;
-    
+    public GameObject InteractUI;
+
+
+
+
+
+    public void OnTriggerEnter()
+    {
+        if(curtainOpened == false)
+        {
+        InteractUI.SetActive(true);
+        }
+    }
+
+    public void OnTriggerExit()
+    {
+        InteractUI.SetActive(false);
+    }
+
     
     
 
@@ -35,6 +53,11 @@ public class opentrigger : MonoBehaviour
             
             Debug.Log("WORKING");
 
+         }
+
+         if(curtainOpened == true)
+         {
+             InteractUI.SetActive(false);
          }
     }
     

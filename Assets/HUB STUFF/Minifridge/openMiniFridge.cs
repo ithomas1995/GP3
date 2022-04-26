@@ -10,12 +10,26 @@ public class openMiniFridge : MonoBehaviour
     AudioSource f_AudioSource;
     public bool fridgeOpened;
     public bool fridgeClosed;
+    public GameObject InteractUI;
     // Start is called before the first frame update
     void Start()
     {
         FridgeAnimator = gameObject.GetComponent<Animator>();
         fridgeOpened = false;
         fridgeClosed = true;
+    }
+
+    public void OnTriggerEnter()
+    {
+        if(fridgeOpened == false)
+        {
+        InteractUI.SetActive(true);
+        }
+    }
+
+    public void OnTriggerExit()
+    {
+        InteractUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -26,16 +40,23 @@ public class openMiniFridge : MonoBehaviour
          {
             //  FridgeAnimator.SetBool("fridgeOpened", true);
             //  FridgeAnimator.SetBool("fridgeClosed", false);
-            //  fridgeOpened = true;
-            //  fridgeClosed = false;
+             fridgeOpened = true;
+             fridgeClosed = false;
             StartCoroutine(waitbeforeclose());
+            
+         }
+
+
+         if(fridgeOpened == true)
+         {
+             InteractUI.SetActive(false);
          }
            
            
             //curtainOpened = true;
 
             
-            Debug.Log("WORKING");
+            //Debug.Log("WORKING");
          
 
          IEnumerator waitbeforeclose()
@@ -43,6 +64,8 @@ public class openMiniFridge : MonoBehaviour
              FridgeAnimator.SetBool("fridgeOpened", true);
              yield return new WaitForSeconds(7);
              FridgeAnimator.SetBool("fridgeOpened", false);
+             fridgeClosed = true;
+             fridgeOpened = false;
          }
 
         //  if(distanceToPlayer.magnitude <= pickUpRange && (Input.GetKeyDown(KeyCode.E) && fridgeOpened == true ))
